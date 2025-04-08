@@ -20,6 +20,8 @@ interface ApplicationRepository : JpaRepository<Application, Long> {
     
     fun countByCampaignAndStatus(campaign: Campaign, status: Application.ApplicationStatus): Long
     
+    fun countByCampaign(campaign: Campaign): Long
+    
     @Query("SELECT a FROM Application a WHERE a.campaign = :campaign AND a.status = :status")
     fun findByCampaignAndStatus(campaign: Campaign, status: Application.ApplicationStatus, pageable: Pageable): Page<Application>
     

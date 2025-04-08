@@ -56,6 +56,14 @@ class SecurityConfig(
             .authorizeHttpRequests { authorizeRequests ->
                 authorizeRequests
                     .requestMatchers("/api/auth/**", "/api/public/**").permitAll()
+                    // Swagger UI endpoints
+                    .requestMatchers(
+                        "/v3/api-docs/**", 
+                        "/swagger-ui/**", 
+                        "/swagger-ui.html", 
+                        "/swagger-resources/**", 
+                        "/webjars/**"
+                    ).permitAll()
                     .requestMatchers("/api/admin/**").hasRole("ADMIN")
                     .requestMatchers("/api/blogger/**").hasRole("BLOGGER")
                     .requestMatchers("/api/store/**").hasRole("STORE")

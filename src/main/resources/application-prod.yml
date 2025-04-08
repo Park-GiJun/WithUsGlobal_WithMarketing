@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:mysql://210.121.177.150:3306/FMMarkting?serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true
+    username: gijunpark
+    password: park9832
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  kafka:
+    bootstrap-servers: localhost:9092
+
+jwt:
+  secret: withusglobalsecretkeymustbelongerthan256bitsforsecurityreasonspleasedontshare
+  expiration: 86400000 # 1 day in milliseconds
+
+logging:
+  level:
+    org.springframework.web: WARN
+    com.gijun.withusglobal: INFO
+    org.hibernate: ERROR

@@ -7,6 +7,7 @@ import com.gijun.withusglobal.common.kafka.KafkaTopics
 import com.gijun.withusglobal.common.kafka.message.ApplicationMessage
 import com.gijun.withusglobal.common.kafka.message.NotificationMessage
 import com.gijun.withusglobal.common.kafka.producer.KafkaProducer
+import com.gijun.withusglobal.store.dto.ApplicationDTO
 import com.gijun.withusglobal.store.repository.CampaignRepository
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort

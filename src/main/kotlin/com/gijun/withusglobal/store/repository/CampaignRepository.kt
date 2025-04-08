@@ -15,6 +15,8 @@ interface CampaignRepository : JpaRepository<Campaign, Long> {
     
     fun findByStatus(status: Campaign.CampaignStatus, pageable: Pageable): Page<Campaign>
     
+    fun findByStoreAndStatus(store: Store, status: Campaign.CampaignStatus, pageable: Pageable): Page<Campaign>
+    
     @Query("SELECT c FROM Campaign c WHERE c.status = :status AND c.applicationEndDate >= :currentDate")
     fun findActiveAndAvailableCampaigns(
         status: Campaign.CampaignStatus, 

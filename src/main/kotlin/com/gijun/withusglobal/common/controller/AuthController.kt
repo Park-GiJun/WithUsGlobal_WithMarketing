@@ -10,6 +10,11 @@ import com.gijun.withusglobal.common.dto.SignupRequest
 import com.gijun.withusglobal.common.service.AuthService
 import com.gijun.withusglobal.store.domain.Store
 import com.gijun.withusglobal.store.dto.StoreDTO
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.tags.Tag
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -18,10 +23,26 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/auth")
+@Tag(name = "Authentication", description = "Authentication Management API")
 class AuthController(
     private val authService: AuthService
 ) {
     
+    @Operation(
+        summary = "Register a new user",
+        description = "Create a new user account with specified role",
+        responses = [
+            ApiResponse(
+                responseCode = "200",
+                description = "User registered successfully",
+                content = [Content(schema = Schema(implementation = AuthResponse::class))]
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "Invalid input or email already in use"
+            )
+        ]
+    )
     @PostMapping("/signup")
     fun signUp(@RequestBody request: SignupRequest): ResponseEntity<CommonResponse<AuthResponse>> {
         try {
@@ -37,6 +58,21 @@ class AuthController(
         }
     }
     
+    @Operation(
+        summary = "Login user",
+        description = "Authenticate user and return JWT token",
+        responses = [
+            ApiResponse(
+                responseCode = "200",
+                description = "Login successful",
+                content = [Content(schema = Schema(implementation = AuthResponse::class))]
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "Invalid credentials"
+            )
+        ]
+    )
     @PostMapping("/login")
     fun login(@RequestBody request: LoginRequest): ResponseEntity<CommonResponse<AuthResponse>> {
         try {
@@ -47,6 +83,21 @@ class AuthController(
         }
     }
     
+    @Operation(
+        summary = "Create store profile",
+        description = "Create a profile for store owners after registration",
+        responses = [
+            ApiResponse(
+                responseCode = "200",
+                description = "Store profile created successfully",
+                content = [Content(schema = Schema(implementation = StoreDTO.Response::class))]
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "Invalid input or not a store user"
+            )
+        ]
+    )
     @PostMapping("/store/profile")
     fun createStoreProfile(@RequestBody request: StoreDTO.Request): ResponseEntity<CommonResponse<StoreDTO.Response>> {
         try {
@@ -75,6 +126,21 @@ class AuthController(
         }
     }
     
+    @Operation(
+        summary = "Create blogger profile",
+        description = "Create a profile for bloggers after registration",
+        responses = [
+            ApiResponse(
+                responseCode = "200",
+                description = "Blogger profile created successfully",
+                content = [Content(schema = Schema(implementation = BloggerDTO.Response::class))]
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "Invalid input or not a blogger user"
+            )
+        ]
+    )
     @PostMapping("/blogger/profile")
     fun createBloggerProfile(@RequestBody request: BloggerDTO.Request): ResponseEntity<CommonResponse<BloggerDTO.Response>> {
         try {
@@ -102,8 +168,22 @@ class AuthController(
         }
     }
     
+    @Operation(
+        summary = "Change password",
+        description = "Change the current user's password",
+        responses = [
+            ApiResponse(
+                responseCode = "200",
+                description = "Password changed successfully"
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "Invalid current password or missing required fields"
+            )
+        ]
+    )
     @PostMapping("/password")
-    fun changePassword(@RequestBody request: Map<String, String>): ResponseEntity<CommonResponse<Nothing>> {
+    fun changePassword(@RequestBody request: Map<String, String>): ResponseEntity<CommonResponse<Any>> {
         try {
             val currentPassword = request["currentPassword"]
                 ?: return ResponseEntity.badRequest().body(CommonResponse.error("Current password is required"))
@@ -113,7 +193,7 @@ class AuthController(
             val success = authService.changePassword(currentPassword, newPassword)
             
             return if (success) {
-                ResponseEntity.ok(CommonResponse.success(null, "Password changed successfully"))
+                ResponseEntity.ok(CommonResponse.success(mapOf("success" to true), "Password changed successfully"))
             } else {
                 ResponseEntity.badRequest().body(CommonResponse.error("Current password is incorrect"))
             }

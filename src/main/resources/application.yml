@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: WithUsGlobal
+  profiles:
+    active: local
+server:
+  port: 8787
+
+# Swagger/OpenAPI Configuration  
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  packages-to-scan: com.gijun.withusglobal
+  default-produces-media-type: application/json

@@ -38,6 +38,16 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("org.springframework.kafka:spring-kafka")
     implementation("org.springframework.session:spring-session-core")
+    
+    // Swagger OpenAPI
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.4.0")
+    implementation("org.springdoc:springdoc-openapi-starter-common:2.4.0")
+    
+    // JWT
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+    
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.mysql:mysql-connector-j")

@@ -23,7 +23,14 @@ class JwtTokenProvider(
     private val expirationTime: Long = 86400000 // 1 day by default
     
     private val secretKey: SecretKey by lazy {
-        Keys.hmacShaKeyFor(secretString.toByteArray())
+        // Ensure the key is at least 256 bits (32 bytes) for HS256
+        val keyBytes = if (secretString.length >= 32) {
+            secretString.toByteArray()
+        } else {
+            val expanded = secretString.padEnd(32, '0')
+            expanded.toByteArray()
+        }
+        Keys.hmacShaKeyFor(keyBytes)
     }
     
     fun generateToken(email: String, roles: Collection<String>): String {
