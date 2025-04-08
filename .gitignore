@@ -38,3 +38,4 @@ out/
 
 ### Kotlin ###
 .kotlin
+!/fm_marketing/node_modules/
