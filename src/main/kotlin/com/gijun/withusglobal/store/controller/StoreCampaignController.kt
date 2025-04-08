@@ -15,23 +15,23 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/store/campaigns")
-@Tag(name = "Store Campaigns", description = "Campaign Management for Store Owners")
+@Tag(name = "스토어 캠페인", description = "스토어 소유자를 위한 캠페인 관리")
 class StoreCampaignController(
     private val storeCampaignService: StoreCampaignService
 ) {
     
     @Operation(
-        summary = "Create a new campaign",
-        description = "Create a new marketing campaign for bloggers to apply to",
+        summary = "새 캠페인 생성",
+        description = "블로거가 지원할 수 있는 새로운 마케팅 캠페인을 생성합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Campaign created successfully",
+                description = "캠페인 생성 성공",
                 content = [Content(schema = Schema(implementation = CampaignDTO.Response::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Invalid input or date constraints"
+                description = "잘못된 입력값 또는 날짜 제약 조건 오류"
             )
         ]
     )
@@ -47,23 +47,23 @@ class StoreCampaignController(
     }
     
     @Operation(
-        summary = "Update a campaign",
-        description = "Update an existing campaign that is in DRAFT or PENDING status",
+        summary = "캠페인 수정",
+        description = "초안(DRAFT) 또는 검토중(PENDING) 상태인 기존 캠페인을 수정합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Campaign updated successfully",
+                description = "캠페인 수정 성공",
                 content = [Content(schema = Schema(implementation = CampaignDTO.Response::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Invalid input, campaign not found, or campaign in wrong status"
+                description = "잘못된 입력값, 캠페인 찾을 수 없음, 또는 캠페인이 잘못된 상태"
             )
         ]
     )
     @PutMapping("/{campaignId}")
     fun updateCampaign(
-        @Parameter(description = "ID of the campaign to update")
+        @Parameter(description = "수정할 캠페인 ID")
         @PathVariable campaignId: Long,
         @RequestBody request: CampaignDTO.Request
     ): ResponseEntity<CommonResponse<CampaignDTO.Response>> {
@@ -77,23 +77,23 @@ class StoreCampaignController(
     }
     
     @Operation(
-        summary = "Submit campaign for review",
-        description = "Submit a draft campaign for admin review before it can be published",
+        summary = "캠페인 검토 요청",
+        description = "초안 상태의 캠페인을 발행하기 전에 관리자 검토를 위해 제출합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Campaign submitted for review",
+                description = "캠페인 검토 요청 성공",
                 content = [Content(schema = Schema(implementation = CampaignDTO.Response::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Campaign not found or not in DRAFT status"
+                description = "캠페인을 찾을 수 없거나 초안 상태가 아님"
             )
         ]
     )
     @PostMapping("/{campaignId}/submit")
     fun submitCampaignForReview(
-        @Parameter(description = "ID of the campaign to submit")
+        @Parameter(description = "검토 요청할 캠페인 ID")
         @PathVariable campaignId: Long
     ): ResponseEntity<CommonResponse<CampaignDTO.Response>> {
         try {
@@ -106,23 +106,23 @@ class StoreCampaignController(
     }
     
     @Operation(
-        summary = "Cancel a campaign",
-        description = "Cancel an existing campaign that has not been completed",
+        summary = "캠페인 취소",
+        description = "완료되지 않은 기존 캠페인을 취소합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Campaign cancelled successfully",
+                description = "캠페인 취소 성공",
                 content = [Content(schema = Schema(implementation = CampaignDTO.Response::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Campaign not found or already completed/cancelled"
+                description = "캠페인을 찾을 수 없거나 이미 완료/취소됨"
             )
         ]
     )
     @PostMapping("/{campaignId}/cancel")
     fun cancelCampaign(
-        @Parameter(description = "ID of the campaign to cancel")
+        @Parameter(description = "취소할 캠페인 ID")
         @PathVariable campaignId: Long
     ): ResponseEntity<CommonResponse<CampaignDTO.Response>> {
         try {
@@ -135,27 +135,27 @@ class StoreCampaignController(
     }
     
     @Operation(
-        summary = "Get store campaigns",
-        description = "Retrieve a paginated list of all campaigns created by the current store",
+        summary = "스토어 캠페인 목록 조회",
+        description = "현재 스토어가 생성한 모든 캠페인의 페이지네이션 목록을 조회합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Successfully retrieved campaigns",
+                description = "캠페인 목록 조회 성공",
                 content = [Content(schema = Schema(implementation = PagedResponse::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Failed to retrieve campaigns"
+                description = "캠페인 목록 조회 실패"
             )
         ]
     )
     @GetMapping
     fun getMyCampaigns(
-        @Parameter(description = "Page number (zero-based)") 
+        @Parameter(description = "페이지 번호 (0부터 시작)") 
         @RequestParam(defaultValue = "0") page: Int,
-        @Parameter(description = "Size of page") 
+        @Parameter(description = "페이지 크기") 
         @RequestParam(defaultValue = "10") size: Int,
-        @Parameter(description = "Filter by campaign status (optional)") 
+        @Parameter(description = "캠페인 상태로 필터링 (선택사항)") 
         @RequestParam(required = false) status: String?
     ): ResponseEntity<CommonResponse<PagedResponse<CampaignDTO.Response>>> {
         try {
@@ -167,23 +167,23 @@ class StoreCampaignController(
     }
     
     @Operation(
-        summary = "Get campaign details",
-        description = "Get detailed information about a specific campaign",
+        summary = "캠페인 상세 정보 조회",
+        description = "특정 캠페인의 상세 정보를 조회합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Successfully retrieved campaign details",
+                description = "캠페인 상세 정보 조회 성공",
                 content = [Content(schema = Schema(implementation = CampaignDTO.Response::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Campaign not found or not owned by current store"
+                description = "캠페인을 찾을 수 없거나 현재 스토어의 소유가 아님"
             )
         ]
     )
     @GetMapping("/{campaignId}")
     fun getCampaign(
-        @Parameter(description = "ID of the campaign to retrieve")
+        @Parameter(description = "조회할 캠페인 ID")
         @PathVariable campaignId: Long
     ): ResponseEntity<CommonResponse<CampaignDTO.Response>> {
         try {

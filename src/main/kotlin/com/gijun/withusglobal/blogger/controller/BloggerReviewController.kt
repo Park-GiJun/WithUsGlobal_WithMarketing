@@ -15,23 +15,23 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/blogger/reviews")
-@Tag(name = "Blogger Reviews", description = "Campaign Review Management for Bloggers")
+@Tag(name = "블로거 리뷰", description = "블로거를 위한 캠페인 리뷰 관리")
 class BloggerReviewController(
     private val bloggerReviewService: BloggerReviewService
 ) {
     
     @Operation(
-        summary = "Submit a review",
-        description = "Submit a review for an approved campaign application after visiting the store",
+        summary = "리뷰 작성",
+        description = "스토어 방문 후 승인된 캠페인 지원에 대한 리뷰를 작성합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Review submitted successfully",
+                description = "리뷰 작성 성공",
                 content = [Content(schema = Schema(implementation = ReviewDTO.Response::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Invalid input or application not in proper status"
+                description = "잘못된 입력값 또는 지원서가 적절한 상태가 아님"
             )
         ]
     )
@@ -47,25 +47,25 @@ class BloggerReviewController(
     }
     
     @Operation(
-        summary = "Get all reviews",
-        description = "Retrieve a paginated list of all reviews submitted by the current blogger",
+        summary = "모든 리뷰 조회",
+        description = "현재 블로거가 작성한 모든 리뷰의 페이지네이션 목록을 조회합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Successfully retrieved reviews",
+                description = "리뷰 목록 조회 성공",
                 content = [Content(schema = Schema(implementation = PagedResponse::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Failed to retrieve reviews"
+                description = "리뷰 목록 조회 실패"
             )
         ]
     )
     @GetMapping
     fun getMyReviews(
-        @Parameter(description = "Page number (zero-based)") 
+        @Parameter(description = "페이지 번호 (0부터 시작)") 
         @RequestParam(defaultValue = "0") page: Int,
-        @Parameter(description = "Size of page") 
+        @Parameter(description = "페이지 크기") 
         @RequestParam(defaultValue = "10") size: Int
     ): ResponseEntity<CommonResponse<PagedResponse<ReviewDTO.Response>>> {
         try {
@@ -77,23 +77,23 @@ class BloggerReviewController(
     }
     
     @Operation(
-        summary = "Get review details",
-        description = "Get detailed information about a specific review",
+        summary = "리뷰 상세 정보 조회",
+        description = "특정 리뷰의 상세 정보를 조회합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Successfully retrieved review details",
+                description = "리뷰 상세 정보 조회 성공",
                 content = [Content(schema = Schema(implementation = ReviewDTO.Response::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Review not found or not owned by current user"
+                description = "리뷰를 찾을 수 없거나 현재 사용자의 소유가 아님"
             )
         ]
     )
     @GetMapping("/{reviewId}")
     fun getReview(
-        @Parameter(description = "ID of the review to retrieve")
+        @Parameter(description = "조회할 리뷰 ID")
         @PathVariable reviewId: Long
     ): ResponseEntity<CommonResponse<ReviewDTO.Response>> {
         try {
@@ -105,23 +105,23 @@ class BloggerReviewController(
     }
     
     @Operation(
-        summary = "Update a review",
-        description = "Update an existing review, particularly useful when a review was rejected and needs revision",
+        summary = "리뷰 수정",
+        description = "기존 리뷰를 수정합니다. 특히 거절된 리뷰를 수정해야 할 때 유용합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Review updated successfully",
+                description = "리뷰 수정 성공",
                 content = [Content(schema = Schema(implementation = ReviewDTO.Response::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Review not found, not owned by current user, or in an invalid status for updates"
+                description = "리뷰를 찾을 수 없거나, 현재 사용자의 소유가 아니거나, 수정 가능한 상태가 아님"
             )
         ]
     )
     @PutMapping("/{reviewId}")
     fun updateReview(
-        @Parameter(description = "ID of the review to update")
+        @Parameter(description = "수정할 리뷰 ID")
         @PathVariable reviewId: Long,
         @RequestBody request: ReviewDTO.Request
     ): ResponseEntity<CommonResponse<ReviewDTO.Response>> {

@@ -23,23 +23,23 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/auth")
-@Tag(name = "Authentication", description = "Authentication Management API")
+@Tag(name = "인증", description = "인증 관리 API")
 class AuthController(
     private val authService: AuthService
 ) {
     
     @Operation(
-        summary = "Register a new user",
-        description = "Create a new user account with specified role",
+        summary = "새 사용자 등록",
+        description = "지정된 역할로 새 사용자 계정을 생성합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "User registered successfully",
+                description = "사용자 등록 성공",
                 content = [Content(schema = Schema(implementation = AuthResponse::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Invalid input or email already in use"
+                description = "잘못된 입력값 또는 이미 사용 중인 이메일"
             )
         ]
     )
@@ -59,17 +59,17 @@ class AuthController(
     }
     
     @Operation(
-        summary = "Login user",
-        description = "Authenticate user and return JWT token",
+        summary = "사용자 로그인",
+        description = "사용자 인증 후 JWT 토큰을 반환합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Login successful",
+                description = "로그인 성공",
                 content = [Content(schema = Schema(implementation = AuthResponse::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Invalid credentials"
+                description = "잘못된 인증 정보"
             )
         ]
     )
@@ -84,17 +84,17 @@ class AuthController(
     }
     
     @Operation(
-        summary = "Create store profile",
-        description = "Create a profile for store owners after registration",
+        summary = "스토어 프로필 생성",
+        description = "등록 후 스토어 소유자를 위한 프로필을 생성합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Store profile created successfully",
+                description = "스토어 프로필 생성 성공",
                 content = [Content(schema = Schema(implementation = StoreDTO.Response::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Invalid input or not a store user"
+                description = "잘못된 입력값 또는 스토어 사용자가 아님"
             )
         ]
     )
@@ -127,17 +127,17 @@ class AuthController(
     }
     
     @Operation(
-        summary = "Create blogger profile",
-        description = "Create a profile for bloggers after registration",
+        summary = "블로거 프로필 생성",
+        description = "등록 후 블로거를 위한 프로필을 생성합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Blogger profile created successfully",
+                description = "블로거 프로필 생성 성공",
                 content = [Content(schema = Schema(implementation = BloggerDTO.Response::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Invalid input or not a blogger user"
+                description = "잘못된 입력값 또는 블로거 사용자가 아님"
             )
         ]
     )
@@ -169,16 +169,16 @@ class AuthController(
     }
     
     @Operation(
-        summary = "Change password",
-        description = "Change the current user's password",
+        summary = "비밀번호 변경",
+        description = "현재 사용자의 비밀번호를 변경합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Password changed successfully"
+                description = "비밀번호 변경 성공"
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Invalid current password or missing required fields"
+                description = "현재 비밀번호가 잘못되었거나 필수 필드 누락"
             )
         ]
     )

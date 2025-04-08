@@ -15,23 +15,23 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/blogger/applications")
-@Tag(name = "Blogger Applications", description = "Campaign Application Management for Bloggers")
+@Tag(name = "블로거 지원", description = "블로거를 위한 캠페인 지원 관리")
 class BloggerApplicationController(
     private val bloggerApplicationService: BloggerApplicationService
 ) {
     
     @Operation(
-        summary = "Apply to a campaign",
-        description = "Submit an application to participate in a marketing campaign",
+        summary = "캠페인 지원",
+        description = "마케팅 캠페인 참여에 지원합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Application submitted successfully",
+                description = "지원서 제출 성공",
                 content = [Content(schema = Schema(implementation = ApplicationDTO.Response::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Invalid input or campaign not available"
+                description = "잘못된 입력값 또는 지원 불가한 캠페인"
             )
         ]
     )
@@ -47,23 +47,23 @@ class BloggerApplicationController(
     }
     
     @Operation(
-        summary = "Cancel an application",
-        description = "Cancel a previously submitted application",
+        summary = "지원 취소",
+        description = "이전에 제출한 지원을 취소합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Application cancelled successfully",
+                description = "지원 취소 성공",
                 content = [Content(schema = Schema(implementation = ApplicationDTO.Response::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Failed to cancel application - may be in wrong status or not owned by current user"
+                description = "지원 취소 실패 - 잘못된 상태이거나 현재 사용자의 소유가 아님"
             )
         ]
     )
     @DeleteMapping("/{applicationId}")
     fun cancelApplication(
-        @Parameter(description = "ID of the application to cancel") 
+        @Parameter(description = "취소할 지원 ID") 
         @PathVariable applicationId: Long
     ): ResponseEntity<CommonResponse<ApplicationDTO.Response>> {
         try {
@@ -76,25 +76,25 @@ class BloggerApplicationController(
     }
     
     @Operation(
-        summary = "Get all applications",
-        description = "Retrieve a paginated list of all applications submitted by the current blogger",
+        summary = "모든 지원 조회",
+        description = "현재 블로거가 제출한 모든 지원의 페이지네이션 목록을 조회합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Successfully retrieved applications",
+                description = "지원 목록 조회 성공",
                 content = [Content(schema = Schema(implementation = PagedResponse::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Failed to retrieve applications"
+                description = "지원 목록 조회 실패"
             )
         ]
     )
     @GetMapping
     fun getMyApplications(
-        @Parameter(description = "Page number (zero-based)") 
+        @Parameter(description = "페이지 번호 (0부터 시작)") 
         @RequestParam(defaultValue = "0") page: Int,
-        @Parameter(description = "Size of page") 
+        @Parameter(description = "페이지 크기") 
         @RequestParam(defaultValue = "10") size: Int
     ): ResponseEntity<CommonResponse<PagedResponse<ApplicationDTO.Response>>> {
         try {
@@ -106,23 +106,23 @@ class BloggerApplicationController(
     }
     
     @Operation(
-        summary = "Get application details",
-        description = "Get detailed information about a specific application",
+        summary = "지원 상세 정보 조회",
+        description = "특정 지원의 상세 정보를 조회합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Successfully retrieved application details",
+                description = "지원 상세 정보 조회 성공",
                 content = [Content(schema = Schema(implementation = ApplicationDTO.Response::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Application not found or not owned by current user"
+                description = "지원을 찾을 수 없거나 현재 사용자의 소유가 아님"
             )
         ]
     )
     @GetMapping("/{applicationId}")
     fun getApplication(
-        @Parameter(description = "ID of the application to retrieve")
+        @Parameter(description = "조회할 지원 ID")
         @PathVariable applicationId: Long
     ): ResponseEntity<CommonResponse<ApplicationDTO.Response>> {
         try {

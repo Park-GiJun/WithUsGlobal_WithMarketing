@@ -15,23 +15,23 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/admin/dashboard")
-@Tag(name = "Admin Dashboard", description = "Dashboard metrics for Administrators")
+@Tag(name = "관리자 대시보드", description = "관리자용 대시보드 지표")
 class AdminDashboardController(
     private val adminDashboardService: AdminDashboardService
 ) {
     
     @Operation(
-        summary = "Get dashboard summary",
-        description = "Get a summary of key metrics for the admin dashboard",
+        summary = "대시보드 요약 정보 조회",
+        description = "관리자 대시보드의 주요 지표 요약 정보를 조회합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Successfully retrieved dashboard summary",
+                description = "대시보드 요약 정보 조회 성공",
                 content = [Content(schema = Schema(implementation = DashboardDTO.Summary::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Failed to retrieve dashboard summary"
+                description = "대시보드 요약 정보 조회 실패"
             )
         ]
     )

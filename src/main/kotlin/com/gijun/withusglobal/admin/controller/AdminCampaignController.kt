@@ -16,33 +16,33 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/admin/campaigns")
-@Tag(name = "Admin Campaigns", description = "Campaign Management for Administrators")
+@Tag(name = "관리자 캠페인", description = "관리자를 위한 캠페인 관리")
 class AdminCampaignController(
     private val adminCampaignService: AdminCampaignService
 ) {
     
     @Operation(
-        summary = "Get all campaigns",
-        description = "Retrieve a paginated list of all campaigns in the system",
+        summary = "모든 캠페인 조회",
+        description = "시스템의 모든 캠페인 페이지네이션 목록을 조회합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Successfully retrieved campaigns",
+                description = "캠페인 목록 조회 성공",
                 content = [Content(schema = Schema(implementation = PagedResponse::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Failed to retrieve campaigns"
+                description = "캠페인 목록 조회 실패"
             )
         ]
     )
     @GetMapping
     fun getAllCampaigns(
-        @Parameter(description = "Page number (zero-based)") 
+        @Parameter(description = "페이지 번호 (0부터 시작)") 
         @RequestParam(defaultValue = "0") page: Int,
-        @Parameter(description = "Size of page") 
+        @Parameter(description = "페이지 크기") 
         @RequestParam(defaultValue = "10") size: Int,
-        @Parameter(description = "Filter by campaign status (optional)") 
+        @Parameter(description = "캠페인 상태로 필터링 (선택사항)") 
         @RequestParam(required = false) status: String?
     ): ResponseEntity<CommonResponse<PagedResponse<CampaignDTO.Response>>> {
         try {
@@ -54,23 +54,23 @@ class AdminCampaignController(
     }
     
     @Operation(
-        summary = "Get campaign details",
-        description = "Get detailed information about a specific campaign with statistics",
+        summary = "캠페인 상세 정보 조회",
+        description = "통계가 포함된 특정 캠페인의 상세 정보를 조회합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Successfully retrieved campaign details",
+                description = "캠페인 상세 정보 조회 성공",
                 content = [Content(schema = Schema(implementation = AdminCampaignDTO.DetailedResponse::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Campaign not found"
+                description = "캠페인을 찾을 수 없음"
             )
         ]
     )
     @GetMapping("/{campaignId}")
     fun getCampaign(
-        @Parameter(description = "ID of the campaign to retrieve")
+        @Parameter(description = "조회할 캠페인 ID")
         @PathVariable campaignId: Long
     ): ResponseEntity<CommonResponse<AdminCampaignDTO.DetailedResponse>> {
         try {
@@ -82,23 +82,23 @@ class AdminCampaignController(
     }
     
     @Operation(
-        summary = "Approve a campaign",
-        description = "Approve a campaign that is in PENDING status and make it ACTIVE",
+        summary = "캠페인 승인",
+        description = "검토중(PENDING) 상태인 캠페인을 승인하여 활성(ACTIVE) 상태로 변경합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Campaign approved successfully",
+                description = "캠페인 승인 성공",
                 content = [Content(schema = Schema(implementation = CampaignDTO.Response::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Campaign not found or not in PENDING status"
+                description = "캠페인을 찾을 수 없거나 검토중 상태가 아님"
             )
         ]
     )
     @PostMapping("/{campaignId}/approve")
     fun approveCampaign(
-        @Parameter(description = "ID of the campaign to approve")
+        @Parameter(description = "승인할 캠페인 ID")
         @PathVariable campaignId: Long
     ): ResponseEntity<CommonResponse<CampaignDTO.Response>> {
         try {

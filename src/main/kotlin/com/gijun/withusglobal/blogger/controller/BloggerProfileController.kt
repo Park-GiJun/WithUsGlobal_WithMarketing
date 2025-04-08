@@ -13,23 +13,23 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/blogger/profile")
-@Tag(name = "Blogger Profile", description = "Blogger Profile Management")
+@Tag(name = "블로거 프로필", description = "블로거 프로필 관리")
 class BloggerProfileController(
     private val bloggerProfileService: BloggerProfileService
 ) {
     
     @Operation(
-        summary = "Get blogger profile",
-        description = "Retrieve the profile information of the current blogger",
+        summary = "블로거 프로필 조회",
+        description = "현재 블로거의 프로필 정보를 조회합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Successfully retrieved blogger profile",
+                description = "블로거 프로필 조회 성공",
                 content = [Content(schema = Schema(implementation = BloggerDTO.Response::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Failed to retrieve profile or user is not a blogger"
+                description = "프로필 조회 실패 또는 사용자가 블로거가 아님"
             )
         ]
     )
@@ -45,17 +45,17 @@ class BloggerProfileController(
     }
     
     @Operation(
-        summary = "Update blogger profile",
-        description = "Update the profile information of the current blogger",
+        summary = "블로거 프로필 수정",
+        description = "현재 블로거의 프로필 정보를 수정합니다",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "Profile updated successfully",
+                description = "프로필 수정 성공",
                 content = [Content(schema = Schema(implementation = BloggerDTO.Response::class))]
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "Failed to update profile, user is not a blogger, or invalid input"
+                description = "프로필 수정 실패, 사용자가 블로거가 아님, 또는 잘못된 입력값"
             )
         ]
     )
