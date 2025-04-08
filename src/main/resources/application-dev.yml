@@ -12,15 +12,7 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect
-  kafka:
-    bootstrap-servers: localhost:9092
 
 jwt:
   secret: withusglobalsecretkeymustbelongerthan256bitsforsecurityreasonspleasedontshare
   expiration: 86400000 # 1 day in milliseconds
-
-logging:
-  level:
-    org.springframework.web: INFO
-    com.gijun.withusglobal: INFO
-    org.hibernate.SQL: INFO

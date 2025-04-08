@@ -76,7 +76,7 @@ class PublicCampaignController(
             val campaign = publicCampaignService.getCampaign(campaignId)
             return ResponseEntity.ok(CommonResponse.success(campaign))
         } catch (e: Exception) {
-            return ResponseEntity.badRequest().body(CommonResponse.error(e.message ?: "캠페인 조회 실패"))
+            return ResponseEntity.badRequest().body(CommonResponse.error(e.message ?: "Failed to get campaign"))
         }
     }
     
@@ -100,7 +100,7 @@ class PublicCampaignController(
             val categories = publicCampaignService.getAllCategories()
             return ResponseEntity.ok(CommonResponse.success(categories))
         } catch (e: Exception) {
-            return ResponseEntity.badRequest().body(CommonResponse.error(e.message ?: "카테고리 목록 조회 실패"))
+            return ResponseEntity.badRequest().body(CommonResponse.error(e.message ?: "Failed to get categories"))
         }
     }
 }

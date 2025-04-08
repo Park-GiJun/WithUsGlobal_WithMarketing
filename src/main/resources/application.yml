@@ -3,6 +3,25 @@ spring:
     name: WithUsGlobal
   profiles:
     active: local
+  kafka:
+    bootstrap-servers: 210.121.177.150:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      retries: 3
+      acks: 1
+    consumer:
+      group-id: pos-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    admin:
+      fail-fast: false
+      properties:
+        bootstrap.servers: 210.121.177.150:9092
+    properties:
+      min.insync.replicas: 1
+      
 server:
   port: 8787
 
