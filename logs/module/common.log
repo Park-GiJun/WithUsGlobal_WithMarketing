@@ -1,0 +1,2 @@
+2025-04-08 22:47:46.554 [restartedMain] INFO  c.g.w.common.config.KafkaConfig - Kafka producer configured with bootstrap servers: 210.121.177.150:9092, retries: 3, acks: 1
+2025-04-08 22:47:46.788 [restartedMain] INFO  c.g.w.common.config.KafkaConfig - Kafka consumer configured with bootstrap servers: 210.121.177.150:9092, group-id: pos-group, auto-offset-reset: earliest
