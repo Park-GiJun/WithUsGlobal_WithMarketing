@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOGS" value="./logs" />
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" />
+
+    <!-- Console appender configuration -->
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File appender for all logs -->
+    <appender name="AllFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/all/withusglobal.log</file>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS}/all/%d{yyyy-MM-dd}/withusglobal.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>3GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Error logs file appender -->
+    <appender name="ErrorFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/error/error.log</file>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS}/error/%d{yyyy-MM-dd}/error.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- API logs file appender -->
+    <appender name="ApiFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/api/api.log</file>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS}/api/%d{yyyy-MM-dd}/api.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>2GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Kafka logs file appender -->
+    <appender name="KafkaFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/kafka/kafka.log</file>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS}/kafka/%d{yyyy-MM-dd}/kafka.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>2GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Package specific log files -->
+    <appender name="CommonFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/module/common.log</file>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS}/module/%d{yyyy-MM-dd}/common.log</fileNamePattern>
+            <maxHistory>15</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="StoreFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/module/store.log</file>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS}/module/%d{yyyy-MM-dd}/store.log</fileNamePattern>
+            <maxHistory>15</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="BloggerFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/module/blogger.log</file>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS}/module/%d{yyyy-MM-dd}/blogger.log</fileNamePattern>
+            <maxHistory>15</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="AdminFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/module/admin.log</file>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS}/module/%d{yyyy-MM-dd}/admin.log</fileNamePattern>
+            <maxHistory>15</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Common package loggers -->
+    <logger name="com.gijun.withusglobal.common" level="INFO" additivity="false">
+        <appender-ref ref="Console" />
+        <appender-ref ref="CommonFile" />
+        <appender-ref ref="AllFile" />
+        <appender-ref ref="ErrorFile" />
+    </logger>
+
+    <!-- Store package loggers -->
+    <logger name="com.gijun.withusglobal.store" level="INFO" additivity="false">
+        <appender-ref ref="Console" />
+        <appender-ref ref="StoreFile" />
+        <appender-ref ref="AllFile" />
+        <appender-ref ref="ErrorFile" />
+    </logger>
+
+    <!-- Blogger package loggers -->
+    <logger name="com.gijun.withusglobal.blogger" level="INFO" additivity="false">
+        <appender-ref ref="Console" />
+        <appender-ref ref="BloggerFile" />
+        <appender-ref ref="AllFile" />
+        <appender-ref ref="ErrorFile" />
+    </logger>
+
+    <!-- Admin package loggers -->
+    <logger name="com.gijun.withusglobal.admin" level="INFO" additivity="false">
+        <appender-ref ref="Console" />
+        <appender-ref ref="AdminFile" />
+        <appender-ref ref="AllFile" />
+        <appender-ref ref="ErrorFile" />
+    </logger>
+
+    <!-- API controller loggers -->
+    <logger name="com.gijun.withusglobal.*.controller" level="INFO" additivity="false">
+        <appender-ref ref="Console" />
+        <appender-ref ref="ApiFile" />
+        <appender-ref ref="AllFile" />
+        <appender-ref ref="ErrorFile" />
+    </logger>
+
+    <!-- Kafka related loggers -->
+    <logger name="com.gijun.withusglobal.common.kafka" level="INFO" additivity="false">
+        <appender-ref ref="Console" />
+        <appender-ref ref="KafkaFile" />
+        <appender-ref ref="CommonFile" />
+        <appender-ref ref="AllFile" />
+        <appender-ref ref="ErrorFile" />
+    </logger>
+    
+    <logger name="org.apache.kafka" level="WARN" additivity="false">
+        <appender-ref ref="Console" />
+        <appender-ref ref="KafkaFile" />
+        <appender-ref ref="ErrorFile" />
+    </logger>
+
+    <!-- Spring related loggers -->
+    <logger name="org.springframework" level="INFO" additivity="false">
+        <appender-ref ref="Console" />
+        <appender-ref ref="AllFile" />
+        <appender-ref ref="ErrorFile" />
+    </logger>
+
+    <logger name="org.springframework.web" level="INFO" additivity="false">
+        <appender-ref ref="Console" />
+        <appender-ref ref="ApiFile" />
+        <appender-ref ref="AllFile" />
+        <appender-ref ref="ErrorFile" />
+    </logger>
+
+    <logger name="org.hibernate.SQL" level="INFO" additivity="false">
+        <appender-ref ref="Console" />
+        <appender-ref ref="AllFile" />
+    </logger>
+
+    <!-- Root logger -->
+    <root level="INFO">
+        <appender-ref ref="Console" />
+        <appender-ref ref="AllFile" />
+        <appender-ref ref="ErrorFile" />
+    </root>
+
+    <!-- Environment specific configurations -->
+    <springProfile name="local">
+        <logger name="com.gijun.withusglobal" level="DEBUG" additivity="false">
+            <appender-ref ref="Console" />
+            <appender-ref ref="AllFile" />
+            <appender-ref ref="ErrorFile" />
+        </logger>
+        <logger name="org.springframework.web" level="DEBUG" additivity="false">
+            <appender-ref ref="Console" />
+            <appender-ref ref="ApiFile" />
+            <appender-ref ref="ErrorFile" />
+        </logger>
+        <logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
+            <appender-ref ref="Console" />
+            <appender-ref ref="AllFile" />
+        </logger>
+    </springProfile>
+
+    <springProfile name="dev">
+        <logger name="com.gijun.withusglobal" level="INFO" additivity="false">
+            <appender-ref ref="Console" />
+            <appender-ref ref="AllFile" />
+            <appender-ref ref="ErrorFile" />
+        </logger>
+    </springProfile>
+
+    <springProfile name="prod">
+        <logger name="com.gijun.withusglobal" level="INFO" additivity="false">
+            <appender-ref ref="AllFile" />
+            <appender-ref ref="ErrorFile" />
+        </logger>
+        <logger name="org.springframework.web" level="WARN" additivity="false">
+            <appender-ref ref="ApiFile" />
+            <appender-ref ref="ErrorFile" />
+        </logger>
+        <logger name="org.hibernate" level="ERROR" additivity="false">
+            <appender-ref ref="AllFile" />
+            <appender-ref ref="ErrorFile" />
+        </logger>
+    </springProfile>
+</configuration>
